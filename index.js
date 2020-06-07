@@ -9,10 +9,10 @@ app.get('/', (req, res, next) => {
 });
 
 app.get('/products', (req, res, next)=>{
-	console.log('Page ', req.query.page);	//query-strings-парамтры в адресной строке ...?page=0
+	console.log('Page ', req.query.page);			//query-strings-парамтры в адресной строке ...?page=0
 	
 	res.send(products);
-	//res.json({products});		//Responce Headers: Content-Type: application/json; charset=utf-8
+	//res.json({products});							//Responce Headers: Content-Type: application/json; charset=utf-8
 });
 
 app.get('/products/:id', (req, res, next)=>{
@@ -20,7 +20,7 @@ app.get('/products/:id', (req, res, next)=>{
 		res.send(products[req.params.id]);
 	}
 	else {
-		res.status(404).send('Product not found');
+		res.status(404).send('Product not found');	//Set status code
 	}
 });
 
