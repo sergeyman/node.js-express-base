@@ -9,9 +9,12 @@ app.get('/', (req, res, next) => {
 });
 
 app.get('/products', (req, res, next)=>{
-	//res.send(products);
-	res.json({products});		//Responce Headers: Content-Type: application/json; charset=utf-8
+	console.log('Page ', req.query.page);	//query-strings-парамтры в адресной строке ...?page=0
+	
+	res.send(products);
+	//res.json({products});		//Responce Headers: Content-Type: application/json; charset=utf-8
 });
+
 app.get('/products/:id', (req, res, next)=>{
 	if(products[req.params.id]) {
 		res.send(products[req.params.id]);
@@ -22,7 +25,7 @@ app.get('/products/:id', (req, res, next)=>{
 });
 
 app.listen(5000, ()=> {
-	console.log('It\'s started');
+	console.log('It\'s started', new Date());
 });
 
 
