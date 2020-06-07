@@ -1,5 +1,5 @@
 const express = require('express');
-const booksRouter = express.Router();				//router
+const booksRouter = express.Router();				//express-router
 
 const app = express();		//it's working
 
@@ -24,6 +24,17 @@ app.get('/products/:id', (req, res, next)=>{
 		res.status(404).send('Product not found');	//Set status code
 	}
 });
+
+app.get('/ukr', (req, res, next) => {				//Redirect to another site
+	res.redirect('https://www.ukr.net/');
+})
+
+app.get('/redirect', (req, res, next) => {			//Redirect to existing route
+	res.redirect(302, '/');
+})
+
+//302 - temp change place
+//301 - const change place
 
 booksRouter.get('/', (req, res) => {
 	res.send('Books');
