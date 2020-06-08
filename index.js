@@ -5,6 +5,10 @@ const app = express();		//it's working
 
 const products = ['Apple', 'Pen', 'Computer', 'Cherry'];
 
+//express.static('public');							//dir for static files
+app.use('/static', express.static(__dirname + '/public'));
+
+
 app.get('/', (req, res, next) => {
 	res.send('It\'s working');
 });
@@ -32,9 +36,13 @@ app.get('/ukr', (req, res, next) => {				//Redirect to another site
 app.get('/redirect', (req, res, next) => {			//Redirect to existing route
 	res.redirect(302, '/');
 })
-
 //302 - temp change place
 //301 - const change place
+
+app.get('/downloadBooks', (req, res, next) => {
+	res.download('./public/books.html' /*custom_file_name, cb_to_find_out_on_pass_file_to */);
+	console.log('File sent');
+})
 
 booksRouter.get('/', (req, res) => {
 	res.send('Books');
