@@ -5,19 +5,25 @@ const app = express();		//it's working
 
 const products = ['Apple', 'Pen', 'Computer', 'Cherry'];
 
+//MW 
+app.use((req, res, next) => {
+	console.log('Date: ', new Date(), 'Method: ', req.method, 'URL: ', req.originalUrl, 'IP: ', req.ip);
+	next();
+});
+
 //express.static('public');							//dir for static files
-app.use('/static', express.static(__dirname + '/public'));
+app.use('/static', express.static(__dirname + '/public'));	//отображать стат. файлы в /public
 
-
+//routes
 app.get('/', (req, res, next) => {
 	res.send('It\'s working');
 });
 
 app.get('/products', (req, res, next)=>{
 	console.log('Page ', req.query.page);			//query-strings-парамтры в адресной строке ...?page=0
-	
-	res.send(products);
-	//res.json({products});							//Responce Headers: Content-Type: application/json; charset=utf-8
+	//next();											//MW function
+	//res.send(products);
+	res.json({products});							//Responce Headers: Content-Type: application/json; charset=utf-8
 });
 
 app.get('/products/:id', (req, res, next)=>{
@@ -54,6 +60,12 @@ booksRouter.get('/about', (req, res) => {
 
 app.use('/books', booksRouter);						// Base route
 
+
+//Error handling with MW
+app.use((err, req, res, next) => {
+	console.log(err.stack);
+	res.status(500).send(err, stack);
+})
 
 app.listen(5000, ()=> {
 	console.log('It\'s started', new Date());
