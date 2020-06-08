@@ -5,6 +5,10 @@ const app = express();		//it's working
 
 const products = ['Apple', 'Pen', 'Computer', 'Cherry'];
 
+app.set('view engine', 'pug');						// turn on pug
+app.set('views', './views');
+
+
 //MW 
 app.use((req, res, next) => {
 	console.log('Date: ', new Date(), 'Method: ', req.method, 'URL: ', req.originalUrl, 'IP: ', req.ip);
@@ -45,6 +49,16 @@ app.get('/redirect', (req, res, next) => {			//Redirect to existing route
 //302 - temp change place
 //301 - const change place
 
+//templating pug
+app.get('/pug', (req, res, next) => {
+	res.render('main', {				//pass value (object) to templates
+		title: 'Products',
+		message: 'Products List',
+		products: products,
+		name: 'Sergei'
+	});
+});
+
 app.get('/downloadBooks', (req, res, next) => {
 	res.download('./public/books.html' /*custom_file_name, cb_to_find_out_on_pass_file_to */);
 	console.log('File sent');
@@ -59,7 +73,6 @@ booksRouter.get('/about', (req, res) => {
 });
 
 app.use('/books', booksRouter);						// Base route
-
 
 //Error handling with MW
 app.use((err, req, res, next) => {
