@@ -5,7 +5,8 @@ const app = express();		//it's working
 
 const products = ['Apple', 'Pen', 'Computer', 'Cherry'];
 
-app.set('view engine', 'pug');						// turn on pug
+//app.set('view engine', 'pug');						// turn on pug
+app.set('view engine', 'ejs');							// turn on EJS
 app.set('views', './views');
 
 
@@ -52,6 +53,16 @@ app.get('/redirect', (req, res, next) => {			//Redirect to existing route
 //templating pug
 app.get('/pug', (req, res, next) => {
 	res.render('main', {				//pass value (object) to templates
+		title: 'Products',
+		message: 'Products List',
+		products: products,
+		name: 'Sergei'
+	});
+});
+
+//templating EJS
+app.get('/ejs', (req, res, next) => {
+	res.render('ejs', {				//pass value (object) to templates
 		title: 'Products',
 		message: 'Products List',
 		products: products,
